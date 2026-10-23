@@ -1109,6 +1109,59 @@
         window.addEventListener('DOMContentLoaded', () => {
             navigateTo('home');
         });
-    </script>
+    </script
+      <!-- SCRIPT INPUT NAMA & KELOMPOK OTOMATIS -->
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    // Cari container header/hero
+    const mainHeader = document.querySelector('header') || document.querySelector('main') || document.body;
+    
+    // Buat elemen box identitas
+    const boxIdentitas = document.createElement('div');
+    boxIdentitas.style.cssText = 'background: #ffffff; padding: 20px; border-radius: 12px; border: 2px solid #e0e0e0; margin: 20px auto; max-width: 500px; color: #333; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-family: sans-serif;';
+    
+    boxIdentitas.innerHTML = `
+        <h3 style="margin-top: 0; color: #1a365d; font-size: 18px; text-align: center;">📋 Identitas Pengguna / Kelompok</h3>
+        <div style="margin-bottom: 12px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Nama Lengkap / Ketua:</label>
+            <input type="text" id="inputNama" placeholder="Ketik nama Anda di sini..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+        </div>
+        <div style="margin-bottom: 12px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Nama Kelompok & Anggota:</label>
+            <textarea id="inputKelompok" placeholder="Contoh: Kelompok 1 - Budi, Ani, Sinta..." rows="3" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;"></textarea>
+        </div>
+        <button type="button" id="btnSimpanIdentitas" style="width: 100%; background-color: #2b6cb0; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+            Simpan Identitas
+        </button>
+        <p id="pesanSukses" style="color: #2f855a; font-weight: bold; display: none; margin-top: 10px; text-align: center;">✓ Identitas berhasil disimpan!</p>
+    `;
+    
+    // Sisipkan di bagian paling atas tampilan
+    if (mainHeader.firstChild) {
+        mainHeader.insertBefore(boxIdentitas, mainHeader.firstChild);
+    } else {
+        mainHeader.appendChild(boxIdentitas);
+    }
+
+    // Ambil data tersimpan jika ada
+    const inputNama = document.getElementById('inputNama');
+    const inputKelompok = document.getElementById('inputKelompok');
+    const btnSimpan = document.getElementById('btnSimpanIdentitas');
+    const pesanSukses = document.getElementById('pesanSukses');
+
+    if (localStorage.getItem('namaSiswa')) inputNama.value = localStorage.getItem('namaSiswa');
+    if (localStorage.getItem('namaKelompok')) inputKelompok.value = localStorage.getItem('namaKelompok');
+
+    btnSimpan.addEventListener('click', () => {
+        if (inputNama.value.trim() !== '' && inputKelompok.value.trim() !== '') {
+            localStorage.setItem('namaSiswa', inputNama.value);
+            localStorage.setItem('namaKelompok', inputKelompok.value);
+            pesanSukses.style.display = 'block';
+        } else {
+            alert('Mohon isi Nama dan Kelompok terlebih dahulu!');
+        }
+    });
+});
+</script>  >
 </body>
 </html>
